@@ -63,6 +63,7 @@ urls = {
     "Lyft": "https://www.lyft.com/",
 }
 
+""" 
 for website, url in urls.items():
     response = requests.get(url)
     if response.status_code == 200:
@@ -70,4 +71,67 @@ for website, url in urls.items():
     else:
         print(f"'{username}' does NOT exist on {website}. RETURN: 0")
 
+"""
 
+html_template = """
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body {{
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }}
+    h1 {{
+        color: #2d2d2d;
+        margin-top: 50px;
+    }}
+    table {{
+        margin: 0 auto;
+        border-collapse: collapse;
+        width: 60%;
+    }}
+    th, td {{
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }}
+    tr:nth-child(even) {{
+        background-color: #f2f2f2;
+    }}
+    tr:hover {{
+        background-color: #ddd;
+    }}
+</style>
+</head>
+<body>
+<h1>Username Check Results for {username}</h1>
+<table>
+<tr>
+    <th>Website</th>
+    <th>Exists</th>
+</tr>
+{table_data}
+</table>
+</body>
+</html>
+"""
+
+table_data = ""
+for website, url in urls.items():
+    response = requests.get(url)
+    if response.status_code == 200:
+        table_data += f"<tr><td>{website}</td><td style='color: green;'>YES</td></tr>"
+        print(f"'{username}' EXISTS  on {website}. RETURN: 1")
+    else:
+        table_data += f"<tr><td>{website}</td><td style='color: red;'>NO</td></tr>"
+        print(f"'{username}' does NOT exist on {website}. RETURN: 0")
+
+html_content = html_template.format(username=username, table_data=table_data)
+
+with open(f"{username}_check_results.html", "w") as f:
+    f.write(html_content)
+    print(f"Results saved to {username}_check_results.html")
+    
+    
