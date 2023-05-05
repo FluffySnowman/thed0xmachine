@@ -8,4 +8,4 @@ Note: This project is still in development and is not ready for use and the owne
 
 The aim of this project is to achieve this with <b>no dependencies</b> and <b>no API keys</b> etc. and can be automated- as in it can be used to do a many things at once instead of using multiple different tools individually.
 
-This program is for research and educational purposes. The owners, contributors or anyone affiliated with this project is not responsible for the misuse of this program or any damage caused by this program in any shape or form.
+<b>This program is for research and educational purposes. The owners, contributors or anyone affiliated with this project is not responsible for the misuse of this program or any damage caused by this program in any shape or form.</b>
