@@ -1,4 +1,5 @@
 import requests
+# import operations.siteurlslist as siteurlslist
 
 username = input('username:')
 
@@ -63,15 +64,6 @@ urls = {
     "Lyft": f"https://www.lyft.com/{username}",
 }
 
-""" 
-for website, url in urls.items():
-    response = requests.get(url)
-    if response.status_code == 200:
-        print(f"'{username}' EXISTS  on {website}. RETURN: 1")
-    else:
-        print(f"'{username}' does NOT exist on {website}. RETURN: 0")
-
-"""
 
 html_template = """
 <!DOCTYPE html>
@@ -118,18 +110,36 @@ html_template = """
 </html>
 """
 
+markdown_template = """
+# Username Check Results for {username}
+
+| Website        | Exists |
+| -------------- | ------ |
+{table_data}
+"""
+
+
 table_data = ""
+markdown_data = ""
 for website, url in urls.items():
     response = requests.get(url)
     if response.status_code == 200:
         table_data += f"<tr><td>{website}</td><td style='color: green;'>YES</td></tr>"
+        markdown_data += f"| {website} | YES |\n"
         print(f"'{username}' EXISTS  on {website}. RETURN: 1")
     else:
         table_data += f"<tr><td>{website}</td><td style='color: red;'>NO</td></tr>"
+        markdown_data += f"| {website} | NO |\n"
         print(f"'{username}' does NOT exist on {website}. RETURN: 0")
 
 html_content = html_template.format(username=username, table_data=table_data)
+markdown_content = markdown_template.format(
+    username=username, table_data=markdown_data)
 
 with open(f"{username}_check_results.html", "w") as f:
     f.write(html_content)
     print(f"Results saved to {username}_check_results.html")
+
+with open(f"{username}_check_results.md", "w") as f:
+    f.write(markdown_content)
+    print(f"Results saved to {username}_check_results.md")
